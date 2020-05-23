@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 #   Use this script to test if a given TCP host/port are available
 
 WAITFORIT_cmdname=${0##*/}
@@ -72,6 +72,7 @@ while [[ $# -gt 0 ]]
 do
     case "$1" in
         *:* )
+        # shellcheck disable=SC2206
         WAITFORIT_hostport=(${1//:/ })
         WAITFORIT_HOST=${WAITFORIT_hostport[0]}
         WAITFORIT_PORT=${WAITFORIT_hostport[1]}

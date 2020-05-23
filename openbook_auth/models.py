@@ -50,6 +50,9 @@ class User(AbstractUser):
     moderated_object = GenericRelation('openbook_moderation.ModeratedObject', related_query_name='users')
     first_name = None
     last_name = None
+    phone_number = models.CharField(_('phone number'), max_length=12, blank=True,
+                                    help_text=_('Required. 20 characters or fewer. Digits and + only.')
+                                    )
     language = models.ForeignKey('openbook_common.Language', null=True, blank=True,
                                  on_delete=models.SET_NULL, related_name='users')
     translation_language = models.ForeignKey('openbook_common.Language', null=True, blank=True,
@@ -93,7 +96,7 @@ class User(AbstractUser):
 
     @classmethod
     def create_user(cls, username, email=None, password=None, name=None, avatar=None, is_of_legal_age=None,
-                    are_guidelines_accepted=None,
+                    are_guidelines_accepted=None, phone_number=None,
                     badge=None):
 
         if not is_of_legal_age:
@@ -106,7 +109,7 @@ class User(AbstractUser):
                 _('You must accept the guidelines to make an account'),
             )
 
-        new_user = cls.objects.create_user(username, email=email, password=password,
+        new_user = cls.objects.create_user(username, email=email, password=password, phone_number=phone_number,
                                            are_guidelines_accepted=are_guidelines_accepted)
         user_profile = bootstrap_user_profile(name=name, user=new_user, avatar=avatar,
                                               is_of_legal_age=is_of_legal_age)
@@ -114,6 +117,11 @@ class User(AbstractUser):
         if badge:
             user_profile.badges.add(badge)
 
+        return new_user
+
+    @classmethod
+    def create_user_fb(cls, username, email=None, password=None):
+        new_user = cls.objects.create_user(username, email=email, password=password)
         return new_user
 
     @classmethod
@@ -3831,8 +3839,8 @@ def bootstrap_user_auth_token(user):
     return Token.objects.create(user=user)
 
 
-def bootstrap_user_profile(user, name, is_of_legal_age, avatar=None, ):
-    return UserProfile.objects.create(name=name, user=user, avatar=avatar, is_of_legal_age=is_of_legal_age, )
+def bootstrap_user_profile(user, name, is_of_legal_age, avatar=None):
+    return UserProfile.objects.create(name=name, user=user, avatar=avatar, is_of_legal_age=is_of_legal_age )
 
 
 class UserNotificationsSubscription(models.Model):

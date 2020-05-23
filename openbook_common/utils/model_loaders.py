@@ -182,7 +182,7 @@ def get_device_model():
 
 
 def get_user_model():
-    return apps.get_model('openbook_auth.User')
+    return apps.get_model('openbook_auth User')
 
 
 def get_user_notifications_subscription_model():

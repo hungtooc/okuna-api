@@ -26,6 +26,16 @@ class RegisterSerializer(serializers.Serializer):
                                           max_upload_size=settings.PROFILE_AVATAR_MAX_SIZE)
     email = serializers.EmailField(validators=[email_not_taken_validator])
     token = serializers.CharField()
+    phone_number = serializers.CharField()
+
+class RegisterSerializerFB(serializers.Serializer):
+    password = serializers.CharField(min_length=PASSWORD_MIN_LENGTH, max_length=PASSWORD_MAX_LENGTH,
+                                     validators=[validate_password])
+    username = serializers.CharField(max_length=USERNAME_MAX_LENGTH,
+                                     required=False,
+                                     allow_blank=True,
+                                     validators=[username_characters_validator, username_not_taken_validator])
+    email = serializers.EmailField(validators=[email_not_taken_validator])
 
 
 class RegisterTokenSerializer(serializers.Serializer):
@@ -45,8 +55,9 @@ class EmailCheckSerializer(serializers.Serializer):
 class EmailVerifySerializer(serializers.Serializer):
     token = serializers.CharField()
 
-
+#custom
 class LoginSerializer(serializers.Serializer):
+    #define rules
     username = serializers.CharField(max_length=USERNAME_MAX_LENGTH,
                                      allow_blank=False,
                                      validators=[username_characters_validator])

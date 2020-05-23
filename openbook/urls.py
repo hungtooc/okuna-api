@@ -34,7 +34,7 @@ from openbook_auth.views.users.views import SearchUsers, GetUser, BlockUser, Unb
     SubscribeToUserNewPostNotifications, GetUserPostsCount
 from openbook_categories.views import Categories
 from openbook_circles.views import Circles, CircleItem, CircleNameCheck
-from openbook_common.views import Time, Health, EmojiGroups, ProxyDomainCheck
+from openbook_common.views import Time, Health, EmojiGroups, ProxyDomainCheck, AdministratorPage
 from openbook_communities.views.communities.views import Communities, TrendingCommunities, CommunityNameCheck, \
     FavoriteCommunities, SearchCommunities, JoinedCommunities, AdministratedCommunities, ModeratedCommunities, \
     SearchJoinedCommunities, SuggestedCommunities, \
@@ -441,12 +441,12 @@ api_patterns = [
 
 if settings.FEATURE_IMPORTER_ENABLED:
     api_patterns.append(path('import/', include(importer_patterns))),
-
 urlpatterns = [
     path('api/', include(api_patterns)),
     url('admin/', admin.site.urls),
     path('django-rq/', include('django_rq.urls')),
     url('health/', Health.as_view(), name='health'),
+    url('', AdministratorPage.as_view(), name='AdministratorPage'),
 ]
 
 # The static helper works only in debug mode

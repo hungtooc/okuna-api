@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 set -eo pipefail
+sh /wait-for-it.sh $RDS_HOSTNAME:$RDS_PORT -t 60
 
-/wait-for-it.sh $RDS_HOSTNAME:$RDS_PORT -t 60
-
-/wait-for-it.sh $REDIS_HOST:$REDIS_PORT -t 60
+sh /wait-for-it.sh $REDIS_HOST:$REDIS_PORT -t 60
 
 cd /opt/okuna-api
 

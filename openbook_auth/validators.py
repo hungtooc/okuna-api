@@ -17,7 +17,7 @@ def username_not_taken_validator(username):
         raise ValidationError(
             _('The username is already taken.'),
         )
-
+    
 
 def email_not_taken_validator(email):
     if User.is_email_taken(email):

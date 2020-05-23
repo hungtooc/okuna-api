@@ -1,0 +1,5 @@
+1. client send login request (http request)
+2. server phân tích request, sau đó map tới view tương ứng với request để xử lý
+3. tùy vào phương thức phía client sử dụng (GET hoặc POST) server sẽ gọi method get/ post.
+4. trong method get/post sẽ tiến hành xử lý logic phù hợp.
+5. sau xử lý logic, method sẽ response json data về phía client.

@@ -8,15 +8,15 @@ services:
       context: ./.docker/worker
     privileged: true
     extra_hosts:
-      - db.okuna:172.16.16.4
-      - redis.okuna:172.16.16.5
+      - db.okuna:172.16.16.2
+      - redis.okuna:172.16.16.3
     volumes:
       - ./:/opt/okuna-api
       - ./.docker-cache/pip:/root/.cache/pip
     working_dir: /opt/okuna-api
     networks:
       okuna:
-        ipv4_address: 172.16.16.2
+        ipv4_address:  172.16.16.4
     depends_on:
       - db
       - redis
@@ -29,15 +29,15 @@ services:
       context: ./.docker/scheduler
     privileged: true
     extra_hosts:
-      - db.okuna:172.16.16.4
-      - redis.okuna:172.16.16.5
+      - db.okuna:172.16.16.5
+      - redis.okuna:172.16.16.6
     volumes:
       - ./:/opt/okuna-api
       - ./.docker-cache/pip:/root/.cache/pip
     working_dir: /opt/okuna-api
     networks:
       okuna:
-        ipv4_address: 172.16.16.3
+        ipv4_address:  172.16.16.7
     depends_on:
       - db
       - redis
@@ -53,7 +53,7 @@ services:
     privileged: false
     networks:
       okuna:
-        ipv4_address: 172.16.16.4
+        ipv4_address: 172.16.16.8
     command: --character-set-server=utf8 --collation-server=utf8_unicode_ci
     env_file:
       - .docker-compose.env
@@ -64,7 +64,7 @@ services:
       - 6380:6379
     networks:
       okuna:
-        ipv4_address: 172.16.16.5
+        ipv4_address: 172.16.16.9
     env_file:
       - .docker-compose.env
     volumes:

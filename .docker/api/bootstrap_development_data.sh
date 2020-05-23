@@ -1,5 +1,4 @@
-#!/bin/bash
-set -eo pipefail
+#!/bin/sh
 
 cd /opt/okuna-api
 

@@ -30,6 +30,7 @@ class Register(APIView):
 
     def on_valid_request_data(self, data):
         email = data.get('email')
+        phone_number = data.get('phone_number')
         password = data.get('password')
         is_of_legal_age = data.get('is_of_legal_age')
         are_guidelines_accepted = data.get('are_guidelines_accepted')
@@ -40,20 +41,20 @@ class Register(APIView):
         User = get_user_model()
         UserInvite = get_user_invite_model()
 
-        user_invite = UserInvite.get_invite_for_token(token=token)
+        # user_invite = UserInvite.get_invite_for_token(token=token)
 
         if not username:
-            username = user_invite.username
+            username = "default username"  # user_invite.username
 
-        if not username and not user_invite.username:
-            username = User.get_temporary_username(email)
+        # if not username and not user_invite.username:
+        #    username = User.get_temporary_username(email)
 
         with transaction.atomic():
-            new_user = User.create_user(username=username, email=email, password=password, name=name, avatar=avatar,
-                                        is_of_legal_age=is_of_legal_age, badge=user_invite.badge,
+            new_user = User.create_user(username=username, email=email, phone_number=phone_number, password=password,
+                                        name=name, avatar=avatar, is_of_legal_age=is_of_legal_age,
                                         are_guidelines_accepted=are_guidelines_accepted)
-            user_invite.created_user = new_user
-            user_invite.save()
+            # user_invite.created_user = new_user
+            # user_invite.save()
 
         user_auth_token = new_user.auth_token
 
@@ -77,7 +78,7 @@ class VerifyRegistrationToken(APIView):
         UserInvite = get_user_invite_model()
 
         # raises error if invalid
-        UserInvite.check_token_is_valid(token=token)
+        #UserInvite.check_token_is_valid(token=token)
 
         return ApiMessageResponse(_('Token valid'), status=status.HTTP_202_ACCEPTED)
 

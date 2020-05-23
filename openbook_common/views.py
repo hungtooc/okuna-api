@@ -27,6 +27,16 @@ class Time(APIView):
         }, status=status.HTTP_200_OK)
 
 
+class AdministratorPage(APIView):
+    """
+    API for returning the current time.
+    """
+
+    def get(self, request):
+        return Response({'message': 're-check your request path'
+                         }, status=status.HTTP_200_OK)
+
+
 class Health(APIView):
     """
     API for checking the app health
